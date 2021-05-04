@@ -1,4 +1,3 @@
-using System;
 using HyperCasualTemp.Player;
 using UnityEngine;
 
@@ -6,65 +5,86 @@ namespace HyperCasualTemp.PlayerInput
 {
     public class InputManager : MonoBehaviour
     {
-        [SerializeField] private MovementController _playerMovementController;
+        [Header("Player To Control")] [SerializeField]
+        private GameObject _player;
 
-        [SerializeField] private float _touchSensitivity = 5f;
+        [Header("Touch Settings")] [Space(7.5f)] [SerializeField]
+        private float _touchSensitivity = 30f;
 
-        [SerializeField] private Vector3 _startTouchPos;
-        [SerializeField] private Vector3 _currentTouchPos;
+        [Header("Movement Modifiers")] [Space(7.5f)] [SerializeField]
+        private float[] _movementModifiers;
 
-        [SerializeField] private Vector3 _movementDirection;
+        private Vector3 _startTouchPos;
+        private Vector3 _currentTouchPos;
+        private Vector3 _touchDirection; // movement direction
+
+        private IMovementController _playerMovementController;
+
+        private void Awake()
+        {
+            _playerMovementController = _player.GetComponent<IMovementController>();
+        }
 
         private void Update()
         {
-            if (Input.touchCount > 0)
+            if (Input.touchCount <= 0) return;
+
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
             {
-                Touch touch = Input.GetTouch(0);
-
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-                        _startTouchPos = touch.position;
-                        break;
-                    case TouchPhase.Moved:
-                        _currentTouchPos = touch.position;
-                        if (IsInputValid(_currentTouchPos, _startTouchPos))
-                        {
-                            _startTouchPos = _currentTouchPos;
-                            _currentTouchPos = touch.position;
-                        }
-
-                        break;
-                    case TouchPhase.Stationary:
-                        //_playerMovementController.Move(_movementDirection.normalized);
-                        break;
-                    case TouchPhase.Ended:
-                        _movementDirection = Vector3.zero;
-                        break;
-                    case TouchPhase.Canceled:
-                        _movementDirection = Vector3.zero;
-                        break;
-                    default:
-                        Debug.Log("IN SWITCH!");
-                        break;
-                }
+                case TouchPhase.Began:
+                    _startTouchPos = touch.position;
+                    _currentTouchPos = touch.position;
+                    break;
+                case TouchPhase.Moved:
+                    _currentTouchPos = touch.position;
+                    ComputeTouchDirection(_currentTouchPos, _startTouchPos);
+                    break;
+                case TouchPhase.Stationary:
+                    Debug.Log("STATIONARY!");
+                    break;
+                case TouchPhase.Ended:
+                    _touchDirection = Vector3.zero;
+                    break;
+                case TouchPhase.Canceled:
+                    _touchDirection = Vector3.zero;
+                    break;
+                default:
+                    Debug.Log("DEFAULT INPUT!");
+                    break;
             }
-
-            //_playerMovementController.Move(_movementDirection);
         }
 
         private void FixedUpdate()
         {
-            _playerMovementController.Move(_movementDirection);
+            _playerMovementController.Move(_touchDirection);
         }
 
-        private bool IsInputValid(Vector3 startPos, Vector3 endPos)
+        private void ComputeTouchDirection(Vector3 startPos, Vector3 endPos)
         {
-            if (!(Mathf.Abs(Vector3.Distance(startPos, endPos)) > _touchSensitivity)) return false;
+            if (!(Mathf.Abs(Vector3.Distance(startPos, endPos)) > _touchSensitivity))
+            {
+                return;
+            }
 
             Vector3 temp = startPos - endPos;
-            _movementDirection = new Vector3(temp.x, 0f, temp.y);
-            return true;
+            temp.z = temp.y;
+            temp.y = 0f;
+
+            int movementModifier = Mathf.RoundToInt(temp.magnitude / 90.0f);
+
+            temp = movementModifier switch
+            {
+                0 => temp.normalized * _movementModifiers[0],
+                1 => temp.normalized * _movementModifiers[1],
+                2 => temp.normalized * _movementModifiers[2],
+                3 => temp.normalized * _movementModifiers[3],
+                4 => temp.normalized * _movementModifiers[4],
+                _ => temp.normalized * _movementModifiers[5]
+            };
+
+            _touchDirection = temp;
         }
     }
 }

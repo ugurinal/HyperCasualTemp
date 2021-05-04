@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace HyperCasualTemp.Player
 {
-    public class MovementController : MonoBehaviour
+    public class MovementController : MonoBehaviour, IMovementController
     {
         [SerializeField] private PlayerSettings _playerSettings;
 
@@ -19,7 +19,7 @@ namespace HyperCasualTemp.Player
                 Vector3.RotateTowards(transform.forward, input, Time.deltaTime * _playerSettings.RotationSpeed, 0f);
             _rigidbody.MoveRotation(Quaternion.LookRotation(desiredForward));
 
-            Vector3 moveDirection = input.normalized * (Time.deltaTime * _playerSettings.MovementSpeed);
+            Vector3 moveDirection = input * (Time.deltaTime * _playerSettings.MovementSpeed);
             _rigidbody.MovePosition(_rigidbody.position + moveDirection);
         }
     }

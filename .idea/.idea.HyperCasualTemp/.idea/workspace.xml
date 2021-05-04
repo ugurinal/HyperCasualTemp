@@ -8,6 +8,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/IMovementController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/MovementController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerSettings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -18,11 +19,12 @@
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/PlayerInputActions.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputData.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerController.cs" />
-      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/MovementController.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputManager.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraFollower.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/MovementController.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/IMovementController.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s4E7HIiLv8qBMh0g9HQ6QWa0eQ" />
@@ -71,6 +73,9 @@
       <workItem from="1620135720100" duration="3814000" />
       <workItem from="1620141573039" duration="90000" />
       <workItem from="1620141919617" duration="2433000" />
+      <workItem from="1620149828648" duration="3034000" />
+      <workItem from="1620162399392" duration="5688000" />
+      <workItem from="1620168442872" duration="132000" />
     </task>
     <servers />
   </component>
