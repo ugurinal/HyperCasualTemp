@@ -553,6 +553,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSettings: {fileID: 11400000, guid: 8195478297ec5a344990eafd2eddf9b5, type: 2}
+  _movementModifiers:
+  - 0.2
+  - 0.5
+  - 0.8
+  - 1.6
+  - 2.2
+  - 2.5
 --- !u!1 &1697864695
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,13 +605,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 986283133}
   _touchSensitivity: 50
-  _movementModifiers:
-  - 0.2
-  - 0.5
-  - 0.8
-  - 1.6
-  - 2.2
-  - 2.5
 --- !u!1 &1759003230
 GameObject:
   m_ObjectHideFlags: 0

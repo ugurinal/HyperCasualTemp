@@ -11,9 +11,6 @@ namespace HyperCasualTemp.PlayerInput
         [Header("Touch Settings")] [Space(7.5f)] [SerializeField]
         private float _touchSensitivity = 30f;
 
-        [Header("Movement Modifiers")] [Space(7.5f)] [SerializeField]
-        private float[] _movementModifiers;
-
         private Vector3 _startTouchPos;
         private Vector3 _currentTouchPos;
         private Vector3 _touchDirection; // movement direction
@@ -63,26 +60,11 @@ namespace HyperCasualTemp.PlayerInput
 
         private void ComputeTouchDirection(Vector3 startPos, Vector3 endPos)
         {
-            if (!(Mathf.Abs(Vector3.Distance(startPos, endPos)) > _touchSensitivity))
-            {
-                return;
-            }
+            if (!(Mathf.Abs(Vector3.Distance(startPos, endPos)) > _touchSensitivity)) return;
 
             Vector3 temp = startPos - endPos;
             temp.z = temp.y;
             temp.y = 0f;
-
-            int movementModifier = Mathf.RoundToInt(temp.magnitude / 90.0f);
-
-            temp = movementModifier switch
-            {
-                0 => temp.normalized * _movementModifiers[0],
-                1 => temp.normalized * _movementModifiers[1],
-                2 => temp.normalized * _movementModifiers[2],
-                3 => temp.normalized * _movementModifiers[3],
-                4 => temp.normalized * _movementModifiers[4],
-                _ => temp.normalized * _movementModifiers[5]
-            };
 
             _touchDirection = temp;
         }

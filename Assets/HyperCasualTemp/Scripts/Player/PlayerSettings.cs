@@ -7,5 +7,6 @@ namespace HyperCasualTemp.Player
     {
         public float MovementSpeed = 3f;
         public float RotationSpeed = 5f;
+        public float[] _movementModifiers;
     }
 }
