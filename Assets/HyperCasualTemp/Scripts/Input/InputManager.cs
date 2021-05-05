@@ -57,10 +57,10 @@ namespace HyperCasualTemp.PlayerInput
                         Debug.Log("STATIONARY!");
                         break;
                     case TouchPhase.Ended:
-                        _touchDirection = Vector3.zero;
+                        _touchInput = Vector3.zero;
                         break;
                     case TouchPhase.Canceled:
-                        _touchDirection = Vector3.zero;
+                        _touchInput = Vector3.zero;
                         break;
                     default:
                         Debug.Log("DEFAULT INPUT!");
