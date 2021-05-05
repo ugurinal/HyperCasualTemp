@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LocalPlayerSettings
   m_EditorClassIdentifier: 
   MovementSpeed: 5
-  RotationSpeed: 5
+  RotationSpeed: 10
   _movementModifiers:
   - 0.5
   - 0.8
