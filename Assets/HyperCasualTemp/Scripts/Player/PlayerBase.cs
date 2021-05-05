@@ -8,14 +8,22 @@ namespace HyperCasualTemp.Player
         [SerializeField] protected int _currentEnergy = 0;
         [SerializeField] protected int _maxEnergy = 0;
 
+
         private void Start()
         {
             _maxEnergy = _wings.Length - 1;
         }
-        
+
         private void OnCollisionEnter(Collision other)
         {
-            if (other.transform.CompareTag("Ground")) return;
+            if (other.transform.CompareTag("Ground"))
+            {
+                Debug.Log("This will work once");
+                GetComponent<IMovementController>().CanMove(true);  // enable character movement
+                GetComponent<Rigidbody>().velocity = Vector3.zero;  // to prevent player rotate
+                
+                return;
+            }
 
             // it it is collided with obstacles that shrinks the wings
 

@@ -23,15 +23,16 @@
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputData.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerController.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/IMovementController.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraFollower.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/LocalPlayer.cs" />
-      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerBase.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/Wing/Wing.cs" />
-      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/MovementController.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/IMovementController.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/MovementController.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Launcher/Launcher.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerBase.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1s4E7HIiLv8qBMh0g9HQ6QWa0eQ" />
@@ -87,6 +88,7 @@
       <workItem from="1620207834197" duration="13753000" />
       <workItem from="1620225522786" duration="200000" />
       <workItem from="1620237719092" duration="5016000" />
+      <workItem from="1620251243687" duration="3464000" />
     </task>
     <servers />
   </component>
