@@ -15,6 +15,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/Wing/Wing.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputSettings.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -29,6 +30,7 @@
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerBase.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/Wing/Wing.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/MovementController.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputSettings.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputManager.cs" />
     </changedPaths>
   </component>
@@ -84,7 +86,7 @@
       <workItem from="1620176750401" duration="249000" />
       <workItem from="1620207834197" duration="13753000" />
       <workItem from="1620225522786" duration="200000" />
-      <workItem from="1620237719092" duration="1400000" />
+      <workItem from="1620237719092" duration="4452000" />
     </task>
     <servers />
   </component>

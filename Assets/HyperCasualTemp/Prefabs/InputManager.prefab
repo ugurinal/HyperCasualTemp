@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  _touchSensitivity: 50
+  _inputSettings: {fileID: 11400000, guid: e9f1e9ed7808e164681037fe1204d367, type: 2}
