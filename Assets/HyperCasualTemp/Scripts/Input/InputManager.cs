@@ -12,16 +12,18 @@ namespace HyperCasualTemp.PlayerInput
         [Header("Touch Settings")] [Space(7.5f)] [SerializeField]
         private InputSettings _inputSettings;
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-        private Vector3 _startTouchPos;
-        private Vector3 _currentTouchPos;
+//#if UNITY_ANDROID && !UNITY_EDITOR
+        [SerializeField] private Vector3 _startTouchPos;
+        [SerializeField] private Vector3 _lastValidTouchInput;
+        [SerializeField] private Vector3 _currentTouchPos;
 
-#endif
+//#endif
         private Vector3 _touchInput; // movement input
 
         private Vector2 _screenSize; // to calculate input magnitude for all devices
 
         private IMovementController _playerMovementController;
+
 
         private void Awake()
         {
@@ -32,13 +34,29 @@ namespace HyperCasualTemp.PlayerInput
         private void Update()
         {
 #if UNITY_EDITOR
-            _touchInput =
-                NormalizeInput(
-                    new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized * 500f);
-
+            HandleKeyboardInput();
 #endif
 
 #if UNITY_ANDROID && !UNITY_EDITOR
+            HandleOldTouchInput();
+#endif
+        }
+
+        private void FixedUpdate()
+        {
+            _playerMovementController.Move(_touchInput);
+        }
+
+        private void HandleKeyboardInput()
+        {
+            _touchInput =
+                NormalizeInput(
+                    new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized * 500f);
+        }
+
+        private void HandleOldTouchInput()
+        {
+            // todo update start touch input position
             if (Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
@@ -67,12 +85,46 @@ namespace HyperCasualTemp.PlayerInput
                         break;
                 }
             }
-#endif
         }
 
-        private void FixedUpdate()
+        private void HandleNewTouchInput()
         {
-            _playerMovementController.Move(_touchInput);
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+                        _startTouchPos = touch.position;
+                        _currentTouchPos = touch.position;
+                        _lastValidTouchInput = touch.position;
+                        break;
+                    case TouchPhase.Moved:
+                        Debug.Log("MOVED!");
+                        _currentTouchPos = touch.position;
+
+                        if (!(Mathf.Abs(Vector3.Distance(_currentTouchPos, _lastValidTouchInput)) >
+                              _inputSettings.TouchSensitivity)) break;
+
+                        ComputeTouchDirection(_currentTouchPos, _startTouchPos);
+                        break;
+                    case TouchPhase.Stationary:
+                        // update start touch position
+                        _startTouchPos = Vector3.Lerp(_startTouchPos, _currentTouchPos, Time.deltaTime);
+                        Debug.Log("STATIONARY!");
+                        break;
+                    case TouchPhase.Ended:
+                        _touchInput = Vector3.zero;
+                        break;
+                    case TouchPhase.Canceled:
+                        _touchInput = Vector3.zero;
+                        break;
+                    default:
+                        Debug.Log("DEFAULT INPUT!");
+                        break;
+                }
+            }
         }
 
         private void ComputeTouchDirection(Vector3 startPos, Vector3 endPos)
@@ -82,6 +134,8 @@ namespace HyperCasualTemp.PlayerInput
             Vector3 temp = startPos - endPos;
             temp.z = temp.y;
             temp.y = 0f;
+
+            _lastValidTouchInput = _currentTouchPos;
 
             _touchInput = NormalizeInput(temp);
         }
