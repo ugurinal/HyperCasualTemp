@@ -12,11 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df86ed2bd8cad564b956fc52d95bf74f, type: 3}
   m_Name: InputSettings
   m_EditorClassIdentifier: 
-  TouchSensitivity: 50
-  TouchModifiers:
-  - 0.5
-  - 0.8
-  - 1.1
-  - 1.4
-  - 1.7
-  - 2.2
+  TouchSensitivity: 40
+  TouchMagnitudeModifier: 11

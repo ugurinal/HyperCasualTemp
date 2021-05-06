@@ -18,7 +18,7 @@ namespace HyperCasualTemp.Player
         {
             if (other.transform.CompareTag("Ground"))
             {
-                Debug.Log("This will work once");
+                // Debug.Log("This will work once");
                 GetComponent<IMovementController>().CanMove(true);  // enable character movement
                 GetComponent<Rigidbody>().velocity = Vector3.zero;  // to prevent player rotate
                 
