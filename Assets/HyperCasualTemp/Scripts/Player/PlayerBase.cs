@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace HyperCasualTemp.Player
@@ -8,20 +9,51 @@ namespace HyperCasualTemp.Player
         [SerializeField] protected int _currentEnergy = 0;
         [SerializeField] protected int _maxEnergy = 0;
 
+        [SerializeField] private float _timeToShrinkWing = 2f;
+        [SerializeField] private float _timeLeft = 0f;
+
+        private bool _isGrounded;
+
+        public bool IsGrounded
+        {
+            get => _isGrounded;
+            set => _isGrounded = value;
+        }
+
+        public int CurrentEnergy => _currentEnergy;
 
         private void Start()
         {
-            _maxEnergy = _wings.Length - 1;
+            _isGrounded = false;
+            _timeLeft = _timeToShrinkWing;
+            _currentEnergy = 1;
+            _maxEnergy = _wings.Length;
+        }
+
+        private void Update()
+        {
+            if (_isGrounded || _currentEnergy <= 0) return;
+
+            _timeLeft -= Time.deltaTime;
+            if (_timeLeft <= 0)
+            {
+                _currentEnergy--;
+                WingShrinker(_currentEnergy);
+                _timeLeft = _timeToShrinkWing;
+            }
         }
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.transform.CompareTag("Ground"))
+            if (other.transform.CompareTag("Platform"))
             {
-                // Debug.Log("This will work once");
-                GetComponent<IMovementController>().CanMove(true);  // enable character movement
-                GetComponent<Rigidbody>().velocity = Vector3.zero;  // to prevent player rotate
-                
+                Debug.Log("This will work once");
+                _isGrounded = true;
+                _timeLeft = _timeToShrinkWing;
+
+                GetComponent<Rigidbody>().velocity = Vector3.zero; // to prevent player rotate
+                GetComponent<Rigidbody>().angularVelocity = Vector3.zero; // to prevent player rotate
+
                 return;
             }
 
@@ -39,10 +71,7 @@ namespace HyperCasualTemp.Player
                 if (_currentEnergy < _maxEnergy)
                 {
                     Destroy(other.gameObject);
-
-                    _currentEnergy++;
                     WingExtender();
-
                     Debug.Log("ENERGY DRINK!");
                 }
                 else
@@ -52,28 +81,38 @@ namespace HyperCasualTemp.Player
             }
         }
 
-        protected void WingExtender()
+        private void WingExtender()
         {
-            _wings[_currentEnergy - 1].SetActive(false);
-            _wings[_currentEnergy].SetActive(true);
+            _currentEnergy++;
+
+            DisableAllWings();
+
+            _wings[_currentEnergy - 1].SetActive(true);
         }
 
-        public void WingShrinker(int collidedWingNum)
+        private void WingShrinker(int collidedWingNum)
         {
+            DisableAllWings();
+
             if (collidedWingNum == 0)
             {
+                _currentEnergy = 0;
                 Debug.Log("GAME OVER!");
                 //  deactivate all wings
                 return;
             }
 
-            for (int i = collidedWingNum; i < _wings.Length; i++)
-            {
-                _wings[i].SetActive(false);
-            }
 
-            _currentEnergy = collidedWingNum - 1;
-            _wings[_currentEnergy].SetActive(true);
+            _currentEnergy = collidedWingNum;
+            _wings[_currentEnergy - 1].SetActive(true);
+        }
+
+        private void DisableAllWings()
+        {
+            foreach (var wing in _wings)
+            {
+                wing.SetActive(false);
+            }
         }
     } // playerbase
 } // namespace

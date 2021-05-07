@@ -24,11 +24,13 @@ namespace HyperCasualTemp.PlayerInput
         [Header("Touch Settings")] [Space(7.5f)] [SerializeField]
         private InputSettings _inputSettings;
 
-        [SerializeField] private Vector3 _startTouchPos;
-        [SerializeField] private Vector3 _currentTouchPos;
-        [SerializeField] private Vector3 _movementInput; // movement input
+        [Space(7.5f)] [SerializeField] private float _keyboardMovementSpeed = 600f;
 
-        [SerializeField] private float _inputModifier; // to calculate input magnitude for all devices
+        private Vector3 _startTouchPos;
+        private Vector3 _currentTouchPos;
+        private Vector3 _movementInput; // movement input
+
+        private float _inputModifier; // to calculate input magnitude for all devices
 
         // [SerializeField] private TouchDirection _lastTouchDirection;
         // [SerializeField] private TouchDirection _currentTouchDirection;
@@ -48,13 +50,13 @@ namespace HyperCasualTemp.PlayerInput
 
         private void Update()
         {
-// #if UNITY_EDITOR
-//             HandleKeyboardInput();
-// #endif
+#if UNITY_EDITOR
+            HandleKeyboardInput();
+ #endif
 
-//#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
             HandleNewTouchInput();
-//#endif
+#endif
         }
 
         private void FixedUpdate()
@@ -62,12 +64,13 @@ namespace HyperCasualTemp.PlayerInput
             _playerMovementController.Move(_movementInput);
         }
 
-        // private void HandleKeyboardInput()
-        // {
-        //     _touchInput =
-        //         NormalizeInput(
-        //             new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized * 500f);
-        // }
+        private void HandleKeyboardInput()
+        {
+            _movementInput =
+                NormalizeInput(
+                    new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized *
+                    _keyboardMovementSpeed);
+        }
 
         // private void HandleOldTouchInput()
         // {

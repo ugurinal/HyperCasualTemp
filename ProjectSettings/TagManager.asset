@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - EnergyDrink
-  - Ground
   - Launcher
+  - Platform
   layers:
   - Default
   - TransparentFX
