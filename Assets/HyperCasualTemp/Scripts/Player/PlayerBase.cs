@@ -24,7 +24,7 @@ namespace HyperCasualTemp.Player
 
         private void Start()
         {
-            _isGrounded = false;
+            _isGrounded = true;
             _timeLeft = _timeToShrinkWing;
             _currentEnergy = 1;
             _maxEnergy = _wings.Length;
@@ -58,7 +58,6 @@ namespace HyperCasualTemp.Player
             }
 
             // it it is collided with obstacles that shrinks the wings
-
             string collidedName = other.GetContact(0).thisCollider.name; // which part of wing is collided
             WingShrinker(int.Parse(collidedName));
             Destroy(other.gameObject);
@@ -71,6 +70,7 @@ namespace HyperCasualTemp.Player
                 if (_currentEnergy < _maxEnergy)
                 {
                     Destroy(other.gameObject);
+                    _currentEnergy++;
                     WingExtender();
                     Debug.Log("ENERGY DRINK!");
                 }
@@ -83,8 +83,6 @@ namespace HyperCasualTemp.Player
 
         private void WingExtender()
         {
-            _currentEnergy++;
-
             DisableAllWings();
 
             _wings[_currentEnergy - 1].SetActive(true);
@@ -98,7 +96,6 @@ namespace HyperCasualTemp.Player
             {
                 _currentEnergy = 0;
                 Debug.Log("GAME OVER!");
-                //  deactivate all wings
                 return;
             }
 
