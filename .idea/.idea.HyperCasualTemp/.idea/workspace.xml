@@ -24,7 +24,6 @@
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputData.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerController.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraSettings.cs" />
-      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraFollower.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/LocalPlayer.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/Wing/Wing.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/IMovementController.cs" />
@@ -35,6 +34,7 @@
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Player/PlayerBase.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/UI/SceneManager.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/UI/SceneLoader.cs" />
+      <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Camera/CameraFollower.cs" />
       <option value="$PROJECT_DIR$/Assets/HyperCasualTemp/Scripts/Input/InputManager.cs" />
     </changedPaths>
   </component>
@@ -48,7 +48,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -98,6 +98,7 @@
       <workItem from="1620312995197" duration="15328000" />
       <workItem from="1620344175533" duration="2268000" />
       <workItem from="1620380323531" duration="10503000" />
+      <workItem from="1620413416746" duration="771000" />
     </task>
     <servers />
   </component>

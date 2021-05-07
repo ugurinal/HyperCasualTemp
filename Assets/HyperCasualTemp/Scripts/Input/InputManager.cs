@@ -18,13 +18,15 @@ namespace HyperCasualTemp.PlayerInput
 
     public class InputManager : MonoBehaviour
     {
-        [Header("Player To Control")] [SerializeField]
-        private GameObject _player;
+        [Header("Player To Control")]
+        [SerializeField] private GameObject _player;
 
-        [Header("Touch Settings")] [Space(7.5f)] [SerializeField]
-        private InputSettings _inputSettings;
+        [Header("Touch Settings")]
+        [Space(7.5f)]
+        [SerializeField] private InputSettings _inputSettings;
 
-        [Space(7.5f)] [SerializeField] private float _keyboardMovementSpeed = 600f;
+        [Space(7.5f)]
+        [SerializeField] private float _keyboardMovementSpeed = 600f;
 
         private Vector3 _startTouchPos;
         private Vector3 _currentTouchPos;
@@ -52,7 +54,7 @@ namespace HyperCasualTemp.PlayerInput
         {
 #if UNITY_EDITOR
             HandleKeyboardInput();
- #endif
+#endif
 
 #if UNITY_ANDROID && !UNITY_EDITOR
             HandleNewTouchInput();
@@ -104,7 +106,7 @@ namespace HyperCasualTemp.PlayerInput
         //         }
         //     }
         // }
-
+#if UNITY_ANDROID && !UNITY_EDITOR
         private void HandleNewTouchInput()
         {
             if (Input.touchCount > 0)
@@ -138,7 +140,7 @@ namespace HyperCasualTemp.PlayerInput
                 }
             }
         }
-
+#endif
 
         private void ComputeTouchInput(Vector3 startPos, Vector3 endPos)
         {
