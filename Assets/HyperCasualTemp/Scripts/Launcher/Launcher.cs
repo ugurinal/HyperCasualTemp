@@ -11,7 +11,8 @@ public class Launcher : MonoBehaviour
     private void Start()
     {
         _targetDirection = (_targetPlatform.position - transform.position).normalized;
-        _targetDirection.y = _targetDirection.z;    // 45
+        _targetDirection.y = _targetDirection.z; // 45
+        // _targetDirection.z /= 1.25f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,6 +30,7 @@ public class Launcher : MonoBehaviour
         float playerEnergy = player.CurrentEnergy;
         player.IsGrounded = false;
 
-        other.GetComponent<Rigidbody>().AddForce(_targetDirection * _baseForce * playerEnergy, ForceMode.VelocityChange);
+        other.GetComponent<Rigidbody>()
+            .AddForce(_targetDirection * _baseForce * playerEnergy, ForceMode.VelocityChange);
     }
 }
