@@ -28,6 +28,9 @@ namespace HyperCasualTemp.PlayerInput
         [Space(7.5f)]
         [SerializeField] private float _keyboardMovementSpeed = 600f;
 
+        //[SerializeField] private float _timeToResetStartTouchPos = 2f;
+        // private float _currentTime = 0f;
+
         private Vector3 _startTouchPos;
         private Vector3 _currentTouchPos;
         private Vector3 _movementInput; // movement input
@@ -46,6 +49,8 @@ namespace HyperCasualTemp.PlayerInput
 
             _inputModifier = Screen.width / _inputSettings.TouchMagnitudeModifier;
 
+            // _currentTime = _timeToResetStartTouchPos;
+
             // _lastTouchDirection = TouchDirection.None;
             // _currentTouchDirection = TouchDirection.None;
         }
@@ -57,7 +62,7 @@ namespace HyperCasualTemp.PlayerInput
 #endif
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-            HandleNewTouchInput();
+            HandleOldTouchInput();
 #endif
         }
 
@@ -74,39 +79,40 @@ namespace HyperCasualTemp.PlayerInput
                     _keyboardMovementSpeed);
         }
 
-        // private void HandleOldTouchInput()
-        // {
-        //     // todo update start touch input position
-        //     if (Input.touchCount > 0)
-        //     {
-        //         Touch touch = Input.GetTouch(0);
-        //
-        //         switch (touch.phase)
-        //         {
-        //             case TouchPhase.Began:
-        //                 _startTouchPos = touch.position;
-        //                 _currentTouchPos = touch.position;
-        //                 break;
-        //             case TouchPhase.Moved:
-        //                 _currentTouchPos = touch.position;
-        //                 ComputeTouchInput(_currentTouchPos, _startTouchPos);
-        //                 break;
-        //             case TouchPhase.Stationary:
-        //                 Debug.Log("STATIONARY!");
-        //                 break;
-        //             case TouchPhase.Ended:
-        //                 _movementInput = Vector3.zero;
-        //                 break;
-        //             case TouchPhase.Canceled:
-        //                 _movementInput = Vector3.zero;
-        //                 break;
-        //             default:
-        //                 Debug.Log("DEFAULT INPUT!");
-        //                 break;
-        //         }
-        //     }
-        // }
-#if UNITY_ANDROID && !UNITY_EDITOR
+        private void HandleOldTouchInput()
+        {
+            // todo update start touch input position
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+                        _startTouchPos = touch.position;
+                        _currentTouchPos = touch.position;
+                        break;
+                    case TouchPhase.Moved:
+                        _currentTouchPos = touch.position;
+                        ComputeTouchInput(_currentTouchPos, _startTouchPos);
+                        break;
+                    case TouchPhase.Stationary:
+                        Debug.Log("STATIONARY!");
+                        break;
+                    case TouchPhase.Ended:
+                        _movementInput = Vector3.zero;
+                        break;
+                    case TouchPhase.Canceled:
+                        _movementInput = Vector3.zero;
+                        break;
+                    default:
+                        Debug.Log("DEFAULT INPUT!");
+                        break;
+                }
+            }
+        }
+
+//#if UNITY_ANDROID && !UNITY_EDITOR
         private void HandleNewTouchInput()
         {
             if (Input.touchCount > 0)
@@ -125,6 +131,12 @@ namespace HyperCasualTemp.PlayerInput
                         ComputeTouchInput(_currentTouchPos, _startTouchPos);
                         break;
                     case TouchPhase.Stationary:
+                        // _currentTime -= Time.deltaTime;
+                        // if (_currentTime <= 0)
+                        // {
+                        //     _startTouchPos = _currentTouchPos;
+                        // }
+
                         // update start touch position
                         //Debug.Log("STATIONARY!");
                         break;
@@ -140,11 +152,17 @@ namespace HyperCasualTemp.PlayerInput
                 }
             }
         }
-#endif
+//#endif
 
         private void ComputeTouchInput(Vector3 startPos, Vector3 endPos)
         {
-            if (!CheckSensitivity(startPos, endPos, _inputSettings.TouchSensitivity)) return;
+            if (!CheckSensitivity(startPos, endPos, _inputSettings.TouchSensitivity))
+            {
+                //_currentTime -= Time.deltaTime;
+                return;
+            }
+
+            //_currentTime = _timeToResetStartTouchPos;
 
             Vector3 temp = startPos - endPos;
             temp.z = temp.y;

@@ -45,7 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _inputSettings: {fileID: 11400000, guid: e9f1e9ed7808e164681037fe1204d367, type: 2}
-  _startTouchPos: {x: 0, y: 0, z: 0}
-  _currentTouchPos: {x: 0, y: 0, z: 0}
-  _touchInput: {x: 0, y: 0, z: 0}
-  _inputModifier: 0
+  _keyboardMovementSpeed: 600
+  _timeToResetStartTouchPos: 1
