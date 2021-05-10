@@ -19,7 +19,7 @@ namespace HyperCasualTemp.PlayerInput
     public class InputManager : MonoBehaviour
     {
         [Header("Player To Control")]
-        [SerializeField] private GameObject _player;
+        [SerializeField] private GameObject _playerGameObject;
 
         [Header("Touch Settings")]
         [Space(7.5f)]
@@ -40,12 +40,14 @@ namespace HyperCasualTemp.PlayerInput
         // [SerializeField] private TouchDirection _lastTouchDirection;
         // [SerializeField] private TouchDirection _currentTouchDirection;
 
+        private PlayerBase _playerBase;
         private IMovementController _playerMovementController;
 
 
         private void Awake()
         {
-            _playerMovementController = _player.GetComponent<IMovementController>();
+            _playerBase = _playerGameObject.GetComponent<PlayerBase>();
+            _playerMovementController = _playerGameObject.GetComponent<IMovementController>();
 
             _inputModifier = Screen.width / _inputSettings.TouchMagnitudeModifier;
 
@@ -57,13 +59,14 @@ namespace HyperCasualTemp.PlayerInput
 
         private void Update()
         {
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
             HandleKeyboardInput();
-#endif
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-            HandleOldTouchInput();
-#endif
+// #endif
+//
+// #if UNITY_ANDROID && !UNITY_EDITOR
+//             HandleOldTouchInput();
+// #endif
+            // HandleMouseInput();
         }
 
         private void FixedUpdate()
@@ -79,6 +82,26 @@ namespace HyperCasualTemp.PlayerInput
                     _keyboardMovementSpeed);
         }
 
+        private void HandleMouseInput()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                _startTouchPos = Input.mousePosition;
+                _currentTouchPos = Input.mousePosition;
+                _playerBase.IsTouching = true;
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                _currentTouchPos = Input.mousePosition;
+                ComputeTouchInput(_currentTouchPos, _startTouchPos);
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                _movementInput = Vector3.zero;
+                _playerBase.IsTouching = false;
+            }
+        }
+
         private void HandleOldTouchInput()
         {
             // todo update start touch input position
@@ -91,6 +114,7 @@ namespace HyperCasualTemp.PlayerInput
                     case TouchPhase.Began:
                         _startTouchPos = touch.position;
                         _currentTouchPos = touch.position;
+                        _playerBase.IsTouching = true;
                         break;
                     case TouchPhase.Moved:
                         _currentTouchPos = touch.position;
@@ -101,9 +125,11 @@ namespace HyperCasualTemp.PlayerInput
                         break;
                     case TouchPhase.Ended:
                         _movementInput = Vector3.zero;
+                        _playerBase.IsTouching = false;
                         break;
                     case TouchPhase.Canceled:
                         _movementInput = Vector3.zero;
+                        _playerBase.IsTouching = false;
                         break;
                     default:
                         Debug.Log("DEFAULT INPUT!");

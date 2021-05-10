@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8bc50086e5eb542a38a6733a7f7dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _playerGameObject: {fileID: 0}
   _inputSettings: {fileID: 11400000, guid: e9f1e9ed7808e164681037fe1204d367, type: 2}
   _keyboardMovementSpeed: 600
-  _timeToResetStartTouchPos: 1

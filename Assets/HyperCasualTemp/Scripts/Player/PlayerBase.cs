@@ -13,11 +13,18 @@ namespace HyperCasualTemp.Player
         [SerializeField] private float _timeLeft = 0f;
 
         private bool _isGrounded;
+        private bool _isTouching;
 
         public bool IsGrounded
         {
             get => _isGrounded;
             set => _isGrounded = value;
+        }
+
+        public bool IsTouching
+        {
+            get => _isTouching;
+            set => _isTouching = value;
         }
 
         public int CurrentEnergy => _currentEnergy;
@@ -32,7 +39,7 @@ namespace HyperCasualTemp.Player
 
         private void Update()
         {
-            if (_isGrounded || _currentEnergy <= 0) return;
+            if (_isGrounded || _currentEnergy <= 0 || !_isTouching) return;
 
             _timeLeft -= Time.deltaTime;
             if (_timeLeft <= 0)

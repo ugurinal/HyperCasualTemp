@@ -29,6 +29,6 @@ public class Launcher : MonoBehaviour
         float playerEnergy = player.CurrentEnergy;
         player.IsGrounded = false;
 
-        other.GetComponent<Rigidbody>().AddForce(_targetDirection * _baseForce * playerEnergy, ForceMode.Acceleration);
+        other.GetComponent<Rigidbody>().AddForce(_targetDirection * _baseForce * playerEnergy, ForceMode.VelocityChange);
     }
 }

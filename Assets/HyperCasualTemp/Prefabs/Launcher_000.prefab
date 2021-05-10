@@ -109,4 +109,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetPlatform: {fileID: 0}
-  _baseForce: 750
+  _baseForce: 25
