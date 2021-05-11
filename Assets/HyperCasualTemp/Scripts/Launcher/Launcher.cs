@@ -5,8 +5,6 @@ public class Launcher : MonoBehaviour
 {
     [Header("Target")]
     [SerializeField] private Transform _targetPlatform;
-    [SerializeField] private bool _useTransform;
-    [SerializeField] private Vector3 _targetDirection;
 
     [Header("Force")]
     [Space(7.5f)]
@@ -14,36 +12,28 @@ public class Launcher : MonoBehaviour
 
     private Vector3 _finalTargetDirection;
 
+
     private void Start()
     {
-        if (_useTransform)
-        {
-            _finalTargetDirection = (_targetPlatform.position - transform.position).normalized;
-            _finalTargetDirection.y = _finalTargetDirection.z; // 45 degree
-            _finalTargetDirection.z /= 1.4f;
-        }
-        else
-        {
-            _finalTargetDirection = _targetDirection;
-        }
+        _finalTargetDirection = (_targetPlatform.position - transform.position).normalized;
+        _finalTargetDirection.y = _finalTargetDirection.z * 1.75f; // 45 degree
+        _finalTargetDirection.z /= 1.85f; // 1.75 ?
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // if it is not player don't do anything
         if (!other.CompareTag("Player")) return;
 
         PlayerBase player = other.GetComponent<PlayerBase>();
 
+        // if player is null then something is wrong
         if (player == null)
         {
             Debug.Log("Player is null!");
             return;
         }
 
-        float playerEnergy = player.CurrentEnergy;
-        player.IsGrounded = false;
-
-        other.GetComponent<Rigidbody>()
-            .AddForce(_finalTargetDirection * _baseForce * playerEnergy, ForceMode.VelocityChange);
-    }
-}
+        other.GetComponent<Rigidbody>().AddForce(_finalTargetDirection * _baseForce, ForceMode.VelocityChange);
+    } // launcher
+} // namespace

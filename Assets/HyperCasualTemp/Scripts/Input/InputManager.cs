@@ -80,13 +80,15 @@ namespace HyperCasualTemp.PlayerInput
                 NormalizeInput(
                     new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized *
                     _keyboardMovementSpeed);
-            if (_movementInput.magnitude > 0f)
+            if (_movementInput.magnitude > 0.5f)
             {
-                _playerBase.IsTouching = true;
+                _playerBase.StartedTouching();
+                // _playerBase.IsTouching = true;
             }
             else
             {
-                _playerBase.IsTouching = false;
+                _playerBase.StoppedTouching();
+                // _playerBase.IsTouching = false;
             }
         }
 
@@ -289,5 +291,5 @@ namespace HyperCasualTemp.PlayerInput
         //         }
         //     }
         // }
-    }
-}
+    } // input manager
+} // namespace

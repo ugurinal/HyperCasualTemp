@@ -17,5 +17,5 @@ namespace HyperCasualTemp.PlayerCamera
             Vector3 targetPos = _target.position + _cameraSettings.Offset;
             transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * _cameraSettings.Speed);
         }
-    }
-}
+    } // camera follower
+} // namespace

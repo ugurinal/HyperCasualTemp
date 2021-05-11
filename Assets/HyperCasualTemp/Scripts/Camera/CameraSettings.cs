@@ -7,5 +7,5 @@ namespace HyperCasualTemp.PlayerCamera
     {
         public Vector3 Offset = Vector3.zero;
         public float Speed = 5f;
-    }
-}
+    } // camera settings
+} // namespace
