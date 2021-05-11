@@ -80,6 +80,14 @@ namespace HyperCasualTemp.PlayerInput
                 NormalizeInput(
                     new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical")).normalized *
                     _keyboardMovementSpeed);
+            if (_movementInput.magnitude > 0f)
+            {
+                _playerBase.IsTouching = true;
+            }
+            else
+            {
+                _playerBase.IsTouching = false;
+            }
         }
 
         private void HandleMouseInput()

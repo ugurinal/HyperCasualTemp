@@ -14,7 +14,7 @@ namespace HyperCasualTemp.Player
         [SerializeField] private float _timeLeft = 0f;
 
         private bool _isGrounded;
-        private bool _isTouching;
+        [SerializeField] private bool _isTouching;
 
         public bool IsGrounded
         {
@@ -64,6 +64,7 @@ namespace HyperCasualTemp.Player
 
                 return;
             }
+
 
             // it it is collided with obstacles that shrinks the wings
             string collidedName = other.GetContact(0).thisCollider.name; // which part of wing is collided
