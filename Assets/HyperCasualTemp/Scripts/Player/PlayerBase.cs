@@ -121,8 +121,8 @@ namespace HyperCasualTemp.Player
 
                 //  if we are landing
                 // reset player velocity to prevent player rotating
-                GetComponent<Rigidbody>().velocity = Vector3.zero;
-                GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                _rigidbody.velocity = Vector3.zero;
+                _rigidbody.angularVelocity = Vector3.zero;
 
                 return;
             }

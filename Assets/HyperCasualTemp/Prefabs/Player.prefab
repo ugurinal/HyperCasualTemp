@@ -850,7 +850,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &5193442765202985100
 MonoBehaviour:
@@ -871,10 +871,8 @@ MonoBehaviour:
   - {fileID: 6378041713455339272}
   _currentEnergy: 1
   _maxEnergy: 4
-  _timeToShrinkWing: 3
-  _timeLeft: 0
+  _timeToShrinkWing: 2
   _groundTag: Platform
-  _isTouching: 0
 --- !u!114 &2235773440052495239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,7 +886,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSettings: {fileID: 11400000, guid: 8195478297ec5a344990eafd2eddf9b5, type: 2}
-  _canMove: 1
 --- !u!1 &2235773440440033442
 GameObject:
   m_ObjectHideFlags: 0

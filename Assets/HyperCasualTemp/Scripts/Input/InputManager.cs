@@ -28,21 +28,14 @@ namespace HyperCasualTemp.PlayerInput
         [Space(7.5f)]
         [SerializeField] private float _keyboardMovementSpeed = 600f;
 
-        //[SerializeField] private float _timeToResetStartTouchPos = 2f;
-        // private float _currentTime = 0f;
-
         private Vector3 _startTouchPos;
         private Vector3 _currentTouchPos;
         private Vector3 _movementInput; // movement input
 
         private float _inputModifier; // to calculate input magnitude for all devices
 
-        // [SerializeField] private TouchDirection _lastTouchDirection;
-        // [SerializeField] private TouchDirection _currentTouchDirection;
-
         private PlayerBase _playerBase;
         private IMovementController _playerMovementController;
-
 
         private void Awake()
         {
@@ -50,23 +43,17 @@ namespace HyperCasualTemp.PlayerInput
             _playerMovementController = _playerGameObject.GetComponent<IMovementController>();
 
             _inputModifier = Screen.width / _inputSettings.TouchMagnitudeModifier;
-
-            // _currentTime = _timeToResetStartTouchPos;
-
-            // _lastTouchDirection = TouchDirection.None;
-            // _currentTouchDirection = TouchDirection.None;
         }
 
         private void Update()
         {
-// #if UNITY_EDITOR
+#if UNITY_EDITOR
             HandleKeyboardInput();
-// #endif
-//
-// #if UNITY_ANDROID && !UNITY_EDITOR
-//             HandleOldTouchInput();
-// #endif
-            // HandleMouseInput();
+#endif
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+            HandleTouchInput();
+#endif
         }
 
         private void FixedUpdate()
@@ -83,38 +70,16 @@ namespace HyperCasualTemp.PlayerInput
             if (_movementInput.magnitude > 0.5f)
             {
                 _playerBase.StartedTouching();
-                // _playerBase.IsTouching = true;
             }
             else
             {
                 _playerBase.StoppedTouching();
-                // _playerBase.IsTouching = false;
             }
         }
 
-        private void HandleMouseInput()
+        private void HandleTouchInput()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                _startTouchPos = Input.mousePosition;
-                _currentTouchPos = Input.mousePosition;
-                _playerBase.IsTouching = true;
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                _currentTouchPos = Input.mousePosition;
-                ComputeTouchInput(_currentTouchPos, _startTouchPos);
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                _movementInput = Vector3.zero;
-                _playerBase.IsTouching = false;
-            }
-        }
-
-        private void HandleOldTouchInput()
-        {
-            // todo update start touch input position
+            //todo update start touch position
             if (Input.touchCount > 0)
             {
                 Touch touch = Input.GetTouch(0);
@@ -124,22 +89,25 @@ namespace HyperCasualTemp.PlayerInput
                     case TouchPhase.Began:
                         _startTouchPos = touch.position;
                         _currentTouchPos = touch.position;
-                        _playerBase.IsTouching = true;
+                        _playerBase.StartedTouching();
                         break;
                     case TouchPhase.Moved:
                         _currentTouchPos = touch.position;
                         ComputeTouchInput(_currentTouchPos, _startTouchPos);
+                        _playerBase.StartedTouching();
                         break;
                     case TouchPhase.Stationary:
-                        Debug.Log("STATIONARY!");
+                        _currentTouchPos = touch.position;
+                        ComputeTouchInput(_currentTouchPos, _startTouchPos);
+                        _playerBase.StartedTouching();
                         break;
                     case TouchPhase.Ended:
                         _movementInput = Vector3.zero;
-                        _playerBase.IsTouching = false;
+                        _playerBase.StoppedTouching();
                         break;
                     case TouchPhase.Canceled:
                         _movementInput = Vector3.zero;
-                        _playerBase.IsTouching = false;
+                        _playerBase.StoppedTouching();
                         break;
                     default:
                         Debug.Log("DEFAULT INPUT!");
@@ -147,58 +115,13 @@ namespace HyperCasualTemp.PlayerInput
                 }
             }
         }
-
-//#if UNITY_ANDROID && !UNITY_EDITOR
-        private void HandleNewTouchInput()
-        {
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-                        _startTouchPos = touch.position;
-                        _currentTouchPos = touch.position;
-                        break;
-                    case TouchPhase.Moved:
-                        Debug.Log("MOVED!");
-                        _currentTouchPos = touch.position;
-                        ComputeTouchInput(_currentTouchPos, _startTouchPos);
-                        break;
-                    case TouchPhase.Stationary:
-                        // _currentTime -= Time.deltaTime;
-                        // if (_currentTime <= 0)
-                        // {
-                        //     _startTouchPos = _currentTouchPos;
-                        // }
-
-                        // update start touch position
-                        //Debug.Log("STATIONARY!");
-                        break;
-                    case TouchPhase.Ended:
-                        _movementInput = Vector3.zero;
-                        break;
-                    case TouchPhase.Canceled:
-                        _movementInput = Vector3.zero;
-                        break;
-                    default:
-                        Debug.Log("DEFAULT INPUT!");
-                        break;
-                }
-            }
-        }
-//#endif
 
         private void ComputeTouchInput(Vector3 startPos, Vector3 endPos)
         {
             if (!CheckSensitivity(startPos, endPos, _inputSettings.TouchSensitivity))
             {
-                //_currentTime -= Time.deltaTime;
                 return;
             }
-
-            //_currentTime = _timeToResetStartTouchPos;
 
             Vector3 temp = startPos - endPos;
             temp.z = temp.y;
@@ -207,12 +130,15 @@ namespace HyperCasualTemp.PlayerInput
             _movementInput = NormalizeInput(temp);
         }
 
+        private bool CheckSensitivity(Vector3 first, Vector3 second, float sensitivity)
+        {
+            return Mathf.Abs(Vector3.Distance(first, second)) > sensitivity;
+        }
+
         private Vector3 NormalizeInput(Vector3 input)
         {
             float xDir = Mathf.Clamp(input.x / _inputModifier, -1, 1);
             float zDir = Mathf.Clamp(input.z / _inputModifier, -1, 1);
-
-            // _lastTouchDirection = _currentTouchDirection;
 
             input.x = xDir;
             input.z = zDir;
@@ -223,14 +149,24 @@ namespace HyperCasualTemp.PlayerInput
             return input;
         }
 
-        private bool CheckSensitivity(Vector3 first, Vector3 second, float sensitivity)
-        {
-            return Mathf.Abs(Vector3.Distance(first, second)) > sensitivity;
-        }
-
-        // private bool CheckSensitivity(Vector2 first, float sensitivity)
+        // private void HandleMouseInput()
         // {
-        //     return first.magnitude > sensitivity;
+        //     if (Input.GetMouseButtonDown(0))
+        //     {
+        //         _startTouchPos = Input.mousePosition;
+        //         _currentTouchPos = Input.mousePosition;
+        //         _playerBase.IsTouching = true;
+        //     }
+        //     else if (Input.GetMouseButton(0))
+        //     {
+        //         _currentTouchPos = Input.mousePosition;
+        //         ComputeTouchInput(_currentTouchPos, _startTouchPos);
+        //     }
+        //     else if (Input.GetMouseButtonUp(0))
+        //     {
+        //         _movementInput = Vector3.zero;
+        //         _playerBase.IsTouching = false;
+        //     }
         // }
 
         // private void CalculateTouchDirection(Vector2 touchDelta)

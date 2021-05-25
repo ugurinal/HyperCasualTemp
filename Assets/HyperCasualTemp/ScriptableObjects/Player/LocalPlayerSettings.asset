@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61aba02245016a649aca14a438f905aa, type: 3}
   m_Name: LocalPlayerSettings
   m_EditorClassIdentifier: 
-  MovementSpeed: 10
+  MovementSpeed: 8
   RotationSpeed: 10

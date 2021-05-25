@@ -5,6 +5,5 @@ namespace HyperCasualTemp.Player
     public interface IMovementController
     {
         void Move(Vector3 input);
-        // void CanMove(bool canMove);
-    } // imovement controller
+    } // i movement controller
 } // namespace
