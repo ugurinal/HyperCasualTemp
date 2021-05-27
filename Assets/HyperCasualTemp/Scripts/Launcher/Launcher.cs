@@ -17,7 +17,7 @@ public class Launcher : MonoBehaviour
     {
         _finalTargetDirection = (_targetPlatform.position - transform.position).normalized;
         _finalTargetDirection.y = _finalTargetDirection.z * 1.75f; // 45 degree
-        _finalTargetDirection.z /= 1.85f; // 1.75 ?
+        _finalTargetDirection.z /= 2f; // 1.75 ?
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,15 +25,15 @@ public class Launcher : MonoBehaviour
         // if it is not player don't do anything
         if (!other.CompareTag("Player")) return;
 
-        PlayerBase player = other.GetComponent<PlayerBase>();
+        Rigidbody playerBody = other.GetComponent<Rigidbody>();
 
         // if player is null then something is wrong
-        if (player == null)
+        if (playerBody == null)
         {
             Debug.Log("Player is null!");
             return;
         }
 
-        other.GetComponent<Rigidbody>().AddForce(_finalTargetDirection * _baseForce, ForceMode.VelocityChange);
+        playerBody.AddForce(_finalTargetDirection * _baseForce, ForceMode.VelocityChange);
     } // launcher
 } // namespace

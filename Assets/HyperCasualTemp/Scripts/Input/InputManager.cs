@@ -28,9 +28,9 @@ namespace HyperCasualTemp.PlayerInput
         [Space(7.5f)]
         [SerializeField] private float _keyboardMovementSpeed = 600f;
 
-        private Vector3 _startTouchPos;
-        private Vector3 _currentTouchPos;
-        private Vector3 _movementInput; // movement input
+        [SerializeField] private Vector3 _startTouchPos;
+        [SerializeField] private Vector3 _currentTouchPos;
+        [SerializeField] private Vector3 _movementInput; // movement input
 
         private float _inputModifier; // to calculate input magnitude for all devices
 
@@ -42,18 +42,19 @@ namespace HyperCasualTemp.PlayerInput
             _playerBase = _playerGameObject.GetComponent<PlayerBase>();
             _playerMovementController = _playerGameObject.GetComponent<IMovementController>();
 
-            _inputModifier = Screen.width / _inputSettings.TouchMagnitudeModifier;
+            _inputModifier = Screen.width / _inputSettings.ScreenModifier;
         }
 
         private void Update()
         {
-#if UNITY_EDITOR
-            HandleKeyboardInput();
-#endif
+// #if UNITY_EDITOR
+//             HandleKeyboardInput();
+// #endif
 
-#if UNITY_ANDROID && !UNITY_EDITOR
+// #if UNITY_ANDROID && !UNITY_EDITOR
             HandleTouchInput();
-#endif
+// #endif
+            // HandleMouseInput();
         }
 
         private void FixedUpdate()
@@ -77,6 +78,7 @@ namespace HyperCasualTemp.PlayerInput
             }
         }
 
+
         private void HandleTouchInput()
         {
             //todo update start touch position
@@ -93,12 +95,12 @@ namespace HyperCasualTemp.PlayerInput
                         break;
                     case TouchPhase.Moved:
                         _currentTouchPos = touch.position;
-                        ComputeTouchInput(_currentTouchPos, _startTouchPos);
+                        ComputeTouchInput();
                         _playerBase.StartedTouching();
                         break;
                     case TouchPhase.Stationary:
                         _currentTouchPos = touch.position;
-                        ComputeTouchInput(_currentTouchPos, _startTouchPos);
+                        ComputeTouchInput();
                         _playerBase.StartedTouching();
                         break;
                     case TouchPhase.Ended:
@@ -116,24 +118,49 @@ namespace HyperCasualTemp.PlayerInput
             }
         }
 
-        private void ComputeTouchInput(Vector3 startPos, Vector3 endPos)
+        private void ComputeTouchInput()
         {
-            if (!CheckSensitivity(startPos, endPos, _inputSettings.TouchSensitivity))
+            Vector3 moveDir = _currentTouchPos - _startTouchPos;
+
+            if (moveDir.magnitude < _inputSettings.Threshold)
             {
                 return;
             }
 
-            Vector3 temp = startPos - endPos;
-            temp.z = temp.y;
-            temp.y = 0f;
+            if (moveDir.magnitude + _inputSettings.Threshold > _inputSettings.Radius)
+            {
+                _startTouchPos += moveDir.normalized * 5f;
+            }
 
-            _movementInput = NormalizeInput(temp);
+            // Vector3 temp = _currentTouchPos - _startTouchPos;
+            moveDir.z = moveDir.y;
+            moveDir.y = 0f;
+
+            _movementInput = NormalizeInput(moveDir);
         }
 
-        private bool CheckSensitivity(Vector3 first, Vector3 second, float sensitivity)
-        {
-            return Mathf.Abs(Vector3.Distance(first, second)) > sensitivity;
-        }
+        // private void ComputeTouchInput(Vector3 startPos, Vector3 endPos)
+        // {
+        //     if (!CheckSensitivity(startPos, endPos, _inputSettings.Threshold))
+        //     {
+        //         return;
+        //     }
+        //
+        //     if ((startPos - endPos).magnitude > _inputSettings.Radius)
+        //     {
+        //     }
+        //
+        //     Vector3 temp = startPos - endPos;
+        //     temp.z = temp.y;
+        //     temp.y = 0f;
+        //
+        //     _movementInput = NormalizeInput(temp);
+        // }
+        //
+        // private bool CheckSensitivity(Vector3 first, Vector3 second, float sensitivity)
+        // {
+        //     return Mathf.Abs(Vector3.Distance(first, second)) > sensitivity;
+        // }
 
         private Vector3 NormalizeInput(Vector3 input)
         {

@@ -17,17 +17,17 @@ namespace HyperCasualTemp.Player
 
         public int CurrentEnergy => _currentEnergy;
 
-        public bool IsGrounded
-        {
-            get => _isGrounded;
-            set => _isGrounded = value;
-        }
+        // public bool IsGrounded
+        // {
+        //     get => _isGrounded;
+        //     set => _isGrounded = value;
+        // }
 
-        public bool IsTouching
-        {
-            get => _isTouching;
-            set => _isTouching = value;
-        }
+        // public bool IsTouching
+        // {
+        //     get => _isTouching;
+        //     set => _isTouching = value;
+        // }
 
 
         private float _timeLeft = 0f;
