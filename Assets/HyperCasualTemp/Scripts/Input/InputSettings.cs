@@ -7,7 +7,6 @@ namespace HyperCasualTemp.PlayerInput
     {
         [Header("Touch Settings")] 
         public float Threshold = 5f;
-        public float ScreenModifier = 11f;
         public float Radius = 30f;
     }
 }

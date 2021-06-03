@@ -791,7 +791,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 85.666664, y: 85.333336}
+  m_SizeDelta: {x: 64.25, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &84046987
 MonoBehaviour:
@@ -6348,7 +6348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &819592231
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6368,7 +6368,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 744, y: 1240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &822076073
 GameObject:
@@ -7249,7 +7249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 15, z: -2}
+  m_LocalPosition: {x: -0.00000035762773, y: 11.300005, z: -42.94998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13795,7 +13795,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 186.18182, y: 186.18182}
+  m_SizeDelta: {x: 204.8, y: 204.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2103628132
 MonoBehaviour:
@@ -14378,15 +14378,11 @@ PrefabInstance:
     - target: {fileID: 8309688245146735955, guid: 0fd5a4d3f6dab904ebdf460257ceca0e, type: 3}
       propertyPath: _joystick
       value: 
-      objectReference: {fileID: 819592230}
+      objectReference: {fileID: 819592231}
     - target: {fileID: 8309688245146735955, guid: 0fd5a4d3f6dab904ebdf460257ceca0e, type: 3}
       propertyPath: _joystickHandle
       value: 
       objectReference: {fileID: 84046986}
-    - target: {fileID: 8309688245146735955, guid: 0fd5a4d3f6dab904ebdf460257ceca0e, type: 3}
-      propertyPath: _joystickOutline
-      value: 
-      objectReference: {fileID: 2103628131}
     - target: {fileID: 8309688245146735955, guid: 0fd5a4d3f6dab904ebdf460257ceca0e, type: 3}
       propertyPath: _playerGameObject
       value: 

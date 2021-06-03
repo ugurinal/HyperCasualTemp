@@ -18,6 +18,8 @@ namespace HyperCasualTemp.PlayerInput
 
     public class InputManager : MonoBehaviour
     {
+        #region Serialized Fields
+
         [Header("Player To Control")]
         [SerializeField] private GameObject _playerGameObject;
 
@@ -29,28 +31,22 @@ namespace HyperCasualTemp.PlayerInput
         [SerializeField] private float _keyboardMovementSpeed = 600f;
 
         [Space(7.5f)]
-        [SerializeField] private GameObject _joystick;
+        [SerializeField] private Transform _joystick; // debug purpose only
+        [SerializeField] private Transform _joystickHandle; // debug purpose only
         [SerializeField] private Vector3 _startTouchPos;
         [SerializeField] private Vector3 _currentTouchPos;
         [SerializeField] private Vector3 _movementInput; // movement input
 
-        private float _inputModifier; // to calculate input magnitude for all devices
+        #endregion
 
         private PlayerBase _playerBase;
         private IMovementController _playerMovementController;
 
-        private Transform _joystickOutline;
-        private Transform _joystickHandle;
 
         private void Awake()
         {
             _playerBase = _playerGameObject.GetComponent<PlayerBase>();
             _playerMovementController = _playerGameObject.GetComponent<IMovementController>();
-
-            _inputModifier = Screen.width / _inputSettings.ScreenModifier;
-
-            _joystickOutline = _joystick.transform.GetChild(0);
-            _joystickHandle = _joystick.transform.GetChild(1);
         }
 
         private void Update()
@@ -130,58 +126,29 @@ namespace HyperCasualTemp.PlayerInput
         {
             Vector3 moveDir = _currentTouchPos - _startTouchPos;
 
-            // if (moveDir.magnitude < _inputSettings.Threshold)
-            // {
-            //     return;
-            // }
-
             _joystickHandle.position = _currentTouchPos;
 
+            if (moveDir.magnitude <= _inputSettings.Threshold)
+                return;
 
-            if (moveDir.magnitude > _inputSettings.Radius)
+            if (moveDir.magnitude >= _inputSettings.Radius)
             {
                 moveDir = moveDir.normalized * _inputSettings.Radius;
 
-                _joystickHandle.localPosition = _joystickHandle.localPosition.normalized * _inputSettings.Radius;
-
-                _startTouchPos += moveDir.normalized * 10f;
+                _startTouchPos = Vector3.Lerp(_startTouchPos, _currentTouchPos, 10f * Time.deltaTime);
                 _joystick.transform.position = _startTouchPos;
             }
 
-            // Vector3 temp = _currentTouchPos - _startTouchPos;
             moveDir.z = moveDir.y;
             moveDir.y = 0f;
 
             _movementInput = NormalizeInput(moveDir);
         }
 
-        // private void ComputeTouchInput(Vector3 startPos, Vector3 endPos)
-        // {
-        //     if (!CheckSensitivity(startPos, endPos, _inputSettings.Threshold))
-        //     {
-        //         return;
-        //     }
-        //
-        //     if ((startPos - endPos).magnitude > _inputSettings.Radius)
-        //     {
-        //     }
-        //
-        //     Vector3 temp = startPos - endPos;
-        //     temp.z = temp.y;
-        //     temp.y = 0f;
-        //
-        //     _movementInput = NormalizeInput(temp);
-        // }
-        //
-        // private bool CheckSensitivity(Vector3 first, Vector3 second, float sensitivity)
-        // {
-        //     return Mathf.Abs(Vector3.Distance(first, second)) > sensitivity;
-        // }
-
         private Vector3 NormalizeInput(Vector3 input)
         {
-            float xDir = Mathf.Clamp(input.x / _inputModifier, -1, 1);
-            float zDir = Mathf.Clamp(input.z / _inputModifier, -1, 1);
+            float xDir = Mathf.Clamp(input.x / _inputSettings.Radius, -1.5f, 1.5f);
+            float zDir = Mathf.Clamp(input.z / _inputSettings.Radius, -1.5f, 1.5f);
 
             input.x = xDir;
             input.z = zDir;
@@ -197,12 +164,10 @@ namespace HyperCasualTemp.PlayerInput
             if (Input.GetMouseButtonDown(0))
             {
                 _startTouchPos = Input.mousePosition;
-                _currentTouchPos = Input.mousePosition;
+                _currentTouchPos = _startTouchPos;
 
-
-                _joystick.transform.position = new Vector3(_startTouchPos.x, _startTouchPos.y, 0f);
-                // _joystickHandle.position = new Vector3(_startTouchPos.x, _startTouchPos.y, 0f);
-                // _joystickOutline.position = new Vector3(_startTouchPos.x, _startTouchPos.y, 0f);
+                _joystick.gameObject.SetActive(true);
+                _joystick.transform.position = (Vector2) _startTouchPos;
 
                 _playerBase.StartedTouching();
             }
@@ -211,13 +176,15 @@ namespace HyperCasualTemp.PlayerInput
                 _currentTouchPos = Input.mousePosition;
 
                 ComputeTouchInput();
-
-                _playerBase.StartedTouching();
             }
             else if (Input.GetMouseButtonUp(0))
             {
                 _movementInput = Vector3.zero;
                 _playerBase.StoppedTouching();
+
+                _joystickHandle.localPosition = Vector3.zero;
+                _joystick.transform.position = Vector3.zero;
+                _joystick.gameObject.SetActive(false);
             }
         }
 

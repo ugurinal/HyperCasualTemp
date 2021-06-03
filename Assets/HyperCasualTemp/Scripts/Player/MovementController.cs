@@ -6,7 +6,7 @@ namespace HyperCasualTemp.Player
     {
         [Header("Player Settings")]
         [SerializeField] private PlayerSettings _playerSettings;
-        
+
         private Rigidbody _rigidbody;
 
         private void Awake()
@@ -25,7 +25,5 @@ namespace HyperCasualTemp.Player
             Vector3 moveDirection = input * (Time.deltaTime * _playerSettings.MovementSpeed);
             _rigidbody.MovePosition(_rigidbody.position + moveDirection);
         }
-
-
     } // movement controller
 } // namespace

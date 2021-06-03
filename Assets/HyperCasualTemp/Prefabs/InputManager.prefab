@@ -47,6 +47,7 @@ MonoBehaviour:
   _inputSettings: {fileID: 11400000, guid: e9f1e9ed7808e164681037fe1204d367, type: 2}
   _keyboardMovementSpeed: 600
   _joystick: {fileID: 0}
+  _joystickHandle: {fileID: 0}
   _startTouchPos: {x: 0, y: 0, z: 0}
   _currentTouchPos: {x: 0, y: 0, z: 0}
   _movementInput: {x: 0, y: 0, z: 0}
